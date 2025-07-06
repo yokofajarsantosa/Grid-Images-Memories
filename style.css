@@ -1,0 +1,169 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fbeaff, #d0f0ff);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+      backdrop-filter: blur(3px);
+    }
+
+    h1 {
+      position: absolute;
+      top: 20px; /* ← Dulu 30px, sekarang ada jarak ke bawah */
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      color: #ff007f;
+      font-weight: bold;
+      text-shadow: 0 0 12px rgba(255, 0, 128, 0.5);
+      z-index: 10;
+      animation: fadeIn 1.5s ease-in-out, glowPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { text-shadow: 0 0 12px rgba(255, 0, 128, 0.5); }
+      50% { text-shadow: 0 0 25px rgba(255, 0, 128, 0.8); }
+    }
+
+    .falling {
+      position: absolute;
+      font-size: 24px;
+      animation: fall linear infinite;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10%) rotate(0deg) scale(1); opacity: 1; }
+      100% { transform: translateY(120vh) rotate(720deg) scale(1.4); opacity: 0.1; }
+    }
+
+    .floating-heart {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      background-image: url('https://emoji.slack-edge.com/T02D4RWG4/heart/8f2b01a9bede8b94.png');
+      background-size: cover;
+      opacity: 0.2;
+      animation: floatY 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .grid-container {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      z-index: 2;
+      padding: 20px;
+      transition: opacity 0.6s ease;
+    }
+
+    .grid-container img,
+    .grid-container video {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      opacity: 0;
+      transform: scale(0.8) rotateX(10deg) rotateY(10deg);
+      animation: popIn 0.6s ease forwards;
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+    }
+
+    .grid-container img:hover,
+    .grid-container video:hover {
+      transform: scale(1.1) rotateX(0deg) rotateY(0deg);
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.8);
+    }
+
+    @keyframes popIn {
+      to {
+        opacity: 1;
+        transform: scale(1) rotateX(0deg) rotateY(0deg);
+      }
+    }
+
+    .corner-gif {
+      position: fixed;
+      width: 180px;
+      height: auto;
+      z-index: 1;
+      opacity: 0.9;
+      pointer-events: none;
+      mix-blend-mode: lighten;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
+    }
+
+    .top-left { top: 10px; left: 10px; }
+    .top-right { top: 10px; right: 10px; }
+    .bottom-left { bottom: 10px; left: 10px; }
+    .bottom-right { bottom: 10px; right: 10px; }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .popup-overlay.active {
+      display: flex;
+    }
+
+    .popup-overlay img,
+    .popup-overlay video {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 24px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 0.5s ease;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .grid-container img,
+      .grid-container video {
+        width: 110px;
+        height: 110px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .corner-gif {
+        width: 120px;
+      }
+    }
